@@ -7,8 +7,13 @@ import com.qualcomm.QCARSamples.CloudRecognition.R.menu;
 
 import de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.control.RouteController;
 
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
@@ -19,6 +24,13 @@ public class RouteActivity extends Activity {
 	
 	
 	private RouteController routeController;
+	
+	private Location currentLocation;
+	private Location targetLocation;
+	private float distance = 0;
+	
+	private LocationManager lm;
+	
 
 	//private Button startButton;
 
@@ -61,5 +73,63 @@ public class RouteActivity extends Activity {
         }
         */
     }
+    
+    
+    
+    /**
+     *  Hier wird alles initialisiert was man für die GPS Sachen braucht. 
+     */
+	private void initLocationManager(){		
+		
+		if(lm != null){
+			lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+		}
+		  	
+    	
+		// Listener für GPS
+    	final LocationListener locationListener = new LocationListener() {
+    		    		
+    		public void onLocationChanged(Location l) {
+  	         
+    		//TextView tv = new TextView(gpstracker.this);
+  	         //t.setText("lat: " + l.getLatitude() + "\nlon: " + l.getLongitude());
+  	         //setContentView(t);
+  	         
+    			targetLocation.setLatitude(l.getLatitude());
+    			targetLocation.setLongitude(l.getLongitude());  	         
+  	         
+    			distance = targetLocation.distanceTo(currentLocation);
+  	       
+         
+    		}
+	
+			@Override
+				public void onProviderDisabled(String provider) {
+					// TODO Auto-generated method stub					
+			}
+
+			@Override
+			public void onProviderEnabled(String provider) {
+				// TODO Auto-generated method stub				
+			}
+
+			@Override
+			public void onStatusChanged(String provider, int status,
+					Bundle extras) {
+				// TODO Auto-generated method stub				
+			}
+    	};
+    	
+    	
+  		// Hier kann eingestellt werden wie oft die GPS daten abgerufen werden sollen.
+  		// bzw. bei welcher Positionsänderung. 
+    	LocationProvider provider = lm.getProvider("gps");
+    	lm.requestLocationUpdates("gps",
+    	        1000, // 1min
+    	        (float) (10),   // 10m
+    	        locationListener);
+
+		
+	}
 
 }

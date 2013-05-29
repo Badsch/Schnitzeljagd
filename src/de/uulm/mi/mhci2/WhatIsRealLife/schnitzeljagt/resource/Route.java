@@ -6,6 +6,9 @@ public class Route {
 	private Location[] locations;
 	private boolean[] isWardSolved;
 	
+	
+	
+	
 	public Route(int nrOfLocations){
 		locations = new Location[nrOfLocations];
 		isWardSolved = new boolean[locations.length];

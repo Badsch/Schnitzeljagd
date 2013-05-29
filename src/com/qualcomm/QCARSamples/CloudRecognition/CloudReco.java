@@ -66,6 +66,7 @@ import com.qualcomm.QCARSamples.CloudRecognition.view.BookOverlayView;
 
 import de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.RouteActivity;
 import de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.control.RouteController;
+import de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.resource.Route;
 
 
 
@@ -1289,8 +1290,16 @@ public class CloudReco extends Activity
                 JSONObject jsonObject = new JSONObject(builder.toString());
 //                JSONObject jsonObject = new JSONObject(mBookDataJSONFullUrl);
                 
-                
+                /*TODO*/
 
+                if(jsonObject.getString("route").equals("1")){
+                	Route route = new Route(Integer.parseInt(jsonObject.getString("totalLocs")));
+                	routeController.setActiveRoute(route);               	
+                	
+                	
+                }
+                
+                
                 // Generates a new Book Object with the JSON object data
                 mBookData = new Book();
 

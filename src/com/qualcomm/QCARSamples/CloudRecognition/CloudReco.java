@@ -1292,34 +1292,17 @@ public class CloudReco extends Activity
                 
                 /*TODO*/
 
-                if(jsonObject.getString("route").equals("1")){
-                	Route route = new Route(Integer.parseInt(jsonObject.getString("totalLocs")));
-                	routeController.setActiveRoute(route);               	
+                if(jsonObject.getBoolean("route")){
                 	
+//                	Route route = new Route(Integer.parseInt(jsonObject.getString("totalLocs")));
+//                	routeController.setActiveRoute(route);               	
+                	routeController.createRoute(jsonObject);
                 	
+                }else{
+                	routeController.addLocation(jsonObject);
                 }
                 
-                
-                // Generates a new Book Object with the JSON object data
-                mBookData = new Book();
-
-                
-                Log.d("lalalalalalal",jsonObject.toString());
-                
-                
-                mBookData.setTitle(jsonObject.getString("hintName"));
-                //mBookData.setAuthor(jsonObject.getString("id"));
-                //Log.d("lalalalalalal",mBookData.getAuthor());
-                
-                Log.d("lalalalalalal","imgurl: "+jsonObject.getString("imgURL"));
-                
-                //mBookData.setBookUrl(jsonObject.getString("bookurl"));
-                //mBookData.setPriceList(jsonObject.getString("list price"));
-                //mBookData.setPriceYour(jsonObject.getString("your price"));
-                //mBookData.setRatingAvg(jsonObject.getString("average rating"));
-                //mBookData.setRatingTotal(jsonObject.getString("# of ratings"));
-
-                // Gets the book thumb image
+                // Gets the thumb image
                 
                 String a = jsonObject.getString("imgURL");
                 byte[] thumb = downloadImage(jsonObject.getString("imgURL"));
@@ -1356,6 +1339,7 @@ public class CloudReco extends Activity
             if (mBookData != null)
             {
                 // Generates a View to display the book data
+            	//TODO: überarbeiten
                 BookOverlayView productView = new BookOverlayView(
                         CloudReco.this);
 
@@ -1473,6 +1457,7 @@ public class CloudReco extends Activity
     /** Updates a BookOverlayView with the Book data specified in parameters */
     private void updateProductView(BookOverlayView productView, Book book)
     {
+    	//TODO : mach mich!
         productView.setBookTitle(book.getTitle());
         productView.setBookPrice("3f");
         productView.setYourPrice("2f");

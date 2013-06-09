@@ -48,4 +48,14 @@
         android:textSize="@dimen/overlay_status"
         android:visibility="gone" />
 
+    <TextView
+        android:id="@+id/textDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="14dp"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
 </RelativeLayout>

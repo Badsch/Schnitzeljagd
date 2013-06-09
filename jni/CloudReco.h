@@ -213,8 +213,11 @@ int lastErrorCode = 0;
 //static const char* kAccessKey = "a580c1512b42e81428fdc68a825b6317f098633c";
 //static const char* kSecretKey = "5fbda9b63d92ab2450c292f3b79f84fce7e228e5";
 
-static const char* kAccessKey = "73e91b708086b4fa805753a8aae7b2f455a15271";
-static const char* kSecretKey = "29be09fb593a0dbefcaea3fca84b845e5e9de9e9";
+//static const char* kAccessKey = "73e91b708086b4fa805753a8aae7b2f455a15271";
+//static const char* kSecretKey = "29be09fb593a0dbefcaea3fca84b845e5e9de9e9";
+
+static const char* kAccessKey = "b16e6d1b14d681883930f72e80d6eac7cbed5f46";
+static const char* kSecretKey = "a10374f4a9fe1268013ef005009dc018d97281f1";
 
 // ----------------------------------------------------------------------------
 // Whether the cloudReco was started:

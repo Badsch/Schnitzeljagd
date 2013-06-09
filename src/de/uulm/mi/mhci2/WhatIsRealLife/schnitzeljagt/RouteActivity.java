@@ -2,12 +2,10 @@ package de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt;
 
 import com.qualcomm.QCARSamples.CloudRecognition.CloudReco;
 import com.qualcomm.QCARSamples.CloudRecognition.R;
-import com.qualcomm.QCARSamples.CloudRecognition.R.layout;
-import com.qualcomm.QCARSamples.CloudRecognition.R.menu;
 
 import de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.control.RouteController;
+import de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.resource.Location;
 
-import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
@@ -17,19 +15,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
+import android.widget.TextView;
 
 public class RouteActivity extends Activity {
-	
-	
-	
+		
 	private RouteController routeController;
+	private Location activeLocation;	
 	
-	private Location currentLocation;
-	private Location targetLocation;
+	private android.location.Location currentLocation;
+	private android.location.Location targetLocation;
 	private float distance = 0;
 	
 	private LocationManager lm;
+	
+	private TextView locationTitle;
+	private TextView routeTitle;
+	
 	
 
 	//private Button startButton;
@@ -40,7 +41,31 @@ public class RouteActivity extends Activity {
 		setContentView(R.layout.activity_route);
 		
 		routeController = RouteController.getRouteController();
+		activeLocation = routeController.getActiveRoute().getCurrendLocation();
+		setViewText();
+	}
+	
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		activeLocation = routeController.getActiveRoute().getCurrendLocation();
+		setViewText();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		activeLocation = routeController.getActiveRoute().getCurrendLocation();
+		setViewText();
+	}
+	
+	
+	
+	private void setViewText(){
+		//TODO fill me biatch!!!!!!
 		
+		locationTitle =(TextView)findViewById(R.id.LocationTitle); 
+		locationTitle.setText(activeLocation.getTitle());
 		
 	}
 
@@ -49,15 +74,15 @@ public class RouteActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.route, menu);
 		return true;
-	}
-	
-	
+	}	
 	
     /** Starts the CloudReco main activity */
     private void startARActivity()
     {
         Intent i = new Intent(this, CloudReco.class);
         startActivity(i);
+        
+        finish();
     }
     
     public void onClick(View v)
@@ -87,9 +112,9 @@ public class RouteActivity extends Activity {
 		  	
     	
 		// Listener für GPS
-    	final LocationListener locationListener = new LocationListener() {
+    	final LocationListener locationListener = new android.location.LocationListener() {
     		    		
-    		public void onLocationChanged(Location l) {
+    		public void onLocationChanged(android.location.Location l) {
   	         
     		//TextView tv = new TextView(gpstracker.this);
   	         //t.setText("lat: " + l.getLatitude() + "\nlon: " + l.getLongitude());
@@ -128,7 +153,6 @@ public class RouteActivity extends Activity {
     	        1000, // 1min
     	        (float) (10),   // 10m
     	        locationListener);
-
 		
 	}
 

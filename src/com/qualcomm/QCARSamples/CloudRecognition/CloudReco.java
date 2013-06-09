@@ -30,6 +30,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -38,6 +39,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -66,6 +70,7 @@ import com.qualcomm.QCARSamples.CloudRecognition.view.BookOverlayView;
 
 import de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.RouteActivity;
 import de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.control.RouteController;
+import de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.resource.Location;
 import de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.resource.Route;
 
 
@@ -76,6 +81,16 @@ import de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.resource.Route;
 /** The main activity for the CloudReco sample. */
 public class CloudReco extends Activity
 {
+	
+	
+	// GPS zeugs
+	private android.location.Location currentLocation;
+	private android.location.Location targetLocation;
+	private float distance = 0;	
+	private LocationManager lm;
+	private TextView textDistance;
+	
+	
     // Defines the Server URL to get the books data
     //private static final String mServerURL = "https://ar.qualcomm.at/samples/cloudreco/json/";
     private static final String mServerURL = "http://www.uni-ulm.de/~s_sbened/mhci2/";
@@ -141,7 +156,7 @@ public class CloudReco extends Activity
     private String mStatusBarText;
 
     // Active Book Data
-    private Book mBookData;
+    private Location mBookData;
     private String mBookJSONUrl;
     private View mLoadingDialogContainer;
     private Texture mBookDataTexture;
@@ -603,6 +618,11 @@ public class CloudReco extends Activity
         
         
         routeController = RouteController.getRouteController();
+        
+        if (routeController.getActiveRoute()!=null && routeController.getActiveRoute().getCurrendLocation() != null){
+        	initLocationManager();
+        }
+        
     }
 
 
@@ -1095,6 +1115,8 @@ public class CloudReco extends Activity
         	Intent i = new Intent(this, RouteActivity.class);
         	startActivity(i);
         	
+        	finish();
+        	
         }
     }
 
@@ -1290,36 +1312,22 @@ public class CloudReco extends Activity
                 JSONObject jsonObject = new JSONObject(builder.toString());
 //                JSONObject jsonObject = new JSONObject(mBookDataJSONFullUrl);
                 
-                /*TODO*/
+                
 
-                if(jsonObject.getString("route").equals("1")){
-                	Route route = new Route(Integer.parseInt(jsonObject.getString("totalLocs")));
-                	routeController.setActiveRoute(route);               	
+                if(jsonObject.getInt("route") == 1){
                 	
+//                	Route route = new Route(Integer.parseInt(jsonObject.getString("totalLocs")));
+//                	routeController.setActiveRoute(route);               	
+                	routeController.createRoute(jsonObject);
                 	
+                }else{
+                	routeController.addLocation(jsonObject);
                 }
                 
+                //mBookData = routeController.getActiveRoute().getCurrendLocation();
+                mBookData = routeController.getActiveRoute().getLocation(jsonObject.getInt("currentLoc"));
                 
-                // Generates a new Book Object with the JSON object data
-                mBookData = new Book();
-
-                
-                Log.d("lalalalalalal",jsonObject.toString());
-                
-                
-                mBookData.setTitle(jsonObject.getString("hintName"));
-                //mBookData.setAuthor(jsonObject.getString("id"));
-                //Log.d("lalalalalalal",mBookData.getAuthor());
-                
-                Log.d("lalalalalalal","imgurl: "+jsonObject.getString("imgURL"));
-                
-                //mBookData.setBookUrl(jsonObject.getString("bookurl"));
-                //mBookData.setPriceList(jsonObject.getString("list price"));
-                //mBookData.setPriceYour(jsonObject.getString("your price"));
-                //mBookData.setRatingAvg(jsonObject.getString("average rating"));
-                //mBookData.setRatingTotal(jsonObject.getString("# of ratings"));
-
-                // Gets the book thumb image
+                // Gets the thumb image
                 
                 String a = jsonObject.getString("imgURL");
                 byte[] thumb = downloadImage(jsonObject.getString("imgURL"));
@@ -1338,7 +1346,7 @@ public class CloudReco extends Activity
             }
             finally
             {
-//                connection.disconnect();
+            	connection.disconnect();
             }
 
             return null;
@@ -1356,6 +1364,7 @@ public class CloudReco extends Activity
             if (mBookData != null)
             {
                 // Generates a View to display the book data
+            	//TODO: überarbeiten
                 BookOverlayView productView = new BookOverlayView(
                         CloudReco.this);
 
@@ -1471,14 +1480,15 @@ public class CloudReco extends Activity
 
 
     /** Updates a BookOverlayView with the Book data specified in parameters */
-    private void updateProductView(BookOverlayView productView, Book book)
+    private void updateProductView(BookOverlayView productView, Location book)
     {
+    	//TODO : mach mich!
         productView.setBookTitle(book.getTitle());
         productView.setBookPrice("3f");
         productView.setYourPrice("2f");
         productView.setBookRatingCount("3");
         productView.setRating("4");
-        productView.setBookAuthor(book.getAuthor());
+        //productView.setBookAuthor(book.getAuthor());
         productView.setCoverViewFromBitmap(book.getThumb());
     }
 
@@ -1771,4 +1781,94 @@ public class CloudReco extends Activity
     	
     	
     }
+    
+    
+    
+    /**
+     *  Hier wird alles initialisiert was man für die GPS Sachen braucht. 
+     */
+	private void initLocationManager(){			
+		
+		targetLocation = new android.location.Location("");
+    	currentLocation = new android.location.Location("");
+		
+		setTagetLocation();
+		
+		
+		if(lm == null){
+			lm = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+		}
+		  	
+		
+		
+		// Listener für GPS
+    	final LocationListener locationListener = new android.location.LocationListener() {
+    		    		
+    		public void onLocationChanged(android.location.Location l) {
+  	         
+    			textDistance = (TextView) mUILayout.findViewById(R.id.textDistance);
+    		//TextView tv = new TextView(gpstracker.this);
+  	         //t.setText("lat: " + l.getLatitude() + "\nlon: " + l.getLongitude());
+  	         //setContentView(t);
+  	         
+    			currentLocation.setLatitude(l.getLatitude());
+    			currentLocation.setLongitude(l.getLongitude());
+    			
+    			//textDistance.setText(l.getLatitude() + " " + l.getLongitude());
+  	         
+    			distance = targetLocation.distanceTo(currentLocation);
+    			textDistance.setText(distance +" m");
+  	       
+         
+    		}
+	
+			@Override
+				public void onProviderDisabled(String provider) {
+					// TODO Auto-generated method stub					
+			}
+
+			@Override
+			public void onProviderEnabled(String provider) {
+				// TODO Auto-generated method stub				
+			}
+
+			@Override
+			public void onStatusChanged(String provider, int status,
+					Bundle extras) {
+				// TODO Auto-generated method stub				
+			}
+    	};
+    	
+    	
+    	
+  		// Hier kann eingestellt werden wie oft die GPS daten abgerufen werden sollen.
+  		// bzw. bei welcher Positionsänderung. 
+    	LocationProvider provider = lm.getProvider("gps");
+    	lm.requestLocationUpdates("gps",
+    	        1000, // 1min
+    	        (float) (2),   // 2m
+    	        locationListener);
+		
+	}
+    
+    
+    
+    private void setTagetLocation(){
+    	
+    	Log.d("lalalalalalal", "fsdfasf ##################" );
+    	
+    	double latitude = routeController.getActiveRoute().getCurrendLocation().getLatitude();
+    	double longitude = routeController.getActiveRoute().getCurrendLocation().getLongitude();
+    	
+    	Log.d("lalalalalalal", "+++++++++++++++++++++" );
+    	
+    	
+    	
+    	targetLocation.setLatitude(latitude);
+    	targetLocation.setLongitude(longitude);
+    	
+    	Log.d("lalalalalalal", "fsdfasf fffffffffffffffff" );
+    }
+    
+    
 }

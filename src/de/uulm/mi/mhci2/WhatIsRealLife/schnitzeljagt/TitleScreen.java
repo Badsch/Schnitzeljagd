@@ -38,11 +38,17 @@ public class TitleScreen extends Activity {
 		else {
 			buttonStart.setEnabled(true);
 		}
-		
-
-
-		
-		
+	}
+	
+	@Override
+	protected void onRestart() {
+		super.onRestart();
+		// prüfe ob es eine aktive Route gibt
+		if( routeController.getActiveRoute() == null){
+			buttonStart.setEnabled(false);
+		} else {
+			buttonStart.setEnabled(true);
+		}
 	}
 	
 	public void scanRoute(View v){

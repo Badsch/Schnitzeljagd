@@ -3,6 +3,8 @@ package de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.resource;
 public class Route {
 	public static int locCounter = 0;
 	
+	private String name;
+	private String id;
 	private Location[] locations;
 	private boolean[] isWardSolved;
 	
@@ -27,6 +29,26 @@ public class Route {
 	
 	public void addLocation(Location loc, int pos){
 		locations[pos] = loc;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	public Location getLocation(int locCount){
+		return locations[locCount];
 	}
 
 }

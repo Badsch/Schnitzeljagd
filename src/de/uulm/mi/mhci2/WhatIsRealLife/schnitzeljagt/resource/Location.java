@@ -15,7 +15,6 @@ public class Location {
 
 	
 	public Location (double _lat, double _long, String[] _hints, String _title, String _url){
-		//XXX: WEil komische scheisse mit den coords passiert die nirgends ein grund hat werden hier lat und long geswapt
 		this.latitude = _lat;
 		this.longitude = _long;
 		this.hints = _hints;

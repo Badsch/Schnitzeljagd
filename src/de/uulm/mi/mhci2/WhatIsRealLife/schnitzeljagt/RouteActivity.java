@@ -1,46 +1,31 @@
 package de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt;
 
-import com.qualcomm.QCARSamples.CloudRecognition.CloudReco;
-import com.qualcomm.QCARSamples.CloudRecognition.R;
-
-import de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.control.RouteController;
-import de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.resource.Location;
-import de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.resource.Route;
-
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.location.LocationProvider;
-import android.net.Uri;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.location.LocationProvider;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-
-import android.widget.TextView;
-
-
-///////
-
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.Gallery.LayoutParams;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ViewSwitcher;
+
+import com.qualcomm.QCARSamples.CloudRecognition.CloudReco;
+import com.qualcomm.QCARSamples.CloudRecognition.R;
+
+import de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.control.RouteController;
+import de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.resource.Location;
+import de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.resource.Route;
+///////
 
 ///
 
@@ -52,19 +37,19 @@ AdapterView.OnItemSelectedListener, ViewSwitcher.ViewFactory {
 
 	private Location activeLocation;
 	
-	
-	
-	
-	
-
 	private android.location.Location currentLocation;
 	private android.location.Location targetLocation;
-	private float distance = 0;
+	private float distance = 0f;
 	
 	private LocationManager lm;
 	
 	private TextView locationTitle;
 	private TextView routeTitle;
+	private TextView hint0;
+	private TextView hint1;
+	private TextView hint2;
+	private TextView hint3;
+	private TextView hint4;
 	
 	private ImageSwitcher mSwitcher;
 	
@@ -81,6 +66,11 @@ AdapterView.OnItemSelectedListener, ViewSwitcher.ViewFactory {
 		
 		locationTitle =(TextView)findViewById(R.id.LocationTitle); 
 		routeTitle =(TextView)findViewById(R.id.routeTitle1); 
+		hint0 = (TextView) findViewById(R.id.locationHint1);
+		hint1 = (TextView) findViewById(R.id.locationHint2);
+		hint2 = (TextView) findViewById(R.id.locationHint3);
+		hint3 = (TextView) findViewById(R.id.locationHint4);
+		hint4 = (TextView) findViewById(R.id.locationHint5);
 	
 		setViewText(activeLocation);
 		
@@ -99,10 +89,6 @@ AdapterView.OnItemSelectedListener, ViewSwitcher.ViewFactory {
         Gallery g = (Gallery) findViewById(R.id.gallery);
         g.setAdapter(new ImageAdapter(this));
         g.setOnItemSelectedListener(this);
-        
-        //////////////
-		
-		
 	}
 	
 	@Override
@@ -131,18 +117,64 @@ AdapterView.OnItemSelectedListener, ViewSwitcher.ViewFactory {
 		Route route = routeController.getActiveRoute();
 
 		if (location == null){
-			
 			routeTitle.setText(route.getName());
 			locationTitle.setText("locked Postion");
 			
-		}
-		else{
-
-			
+		}else{
 			routeTitle.setText(route.getName());
 			locationTitle.setText(location.getTitle());
-			
+			String[] hints = location.getHints();
 
+			for(int i = 0;i<hints.length;i++){
+				if(hints[i].length() > 1){
+					switch(i){
+						case 0:
+							hint0.setText(hints[0]);
+							findViewById(R.id.ImageView01).setVisibility(View.VISIBLE);
+							break;
+						case 1:
+							hint1.setText(hints[1]);
+							findViewById(R.id.ImageView02).setVisibility(View.VISIBLE);
+							break;
+						case 2:
+							hint2.setText(hints[2]);
+							findViewById(R.id.ImageView03).setVisibility(View.VISIBLE);
+							break;
+						case 3:
+							hint3.setText(hints[3]);
+							findViewById(R.id.ImageView04).setVisibility(View.VISIBLE);
+							break;
+						case 4:
+							hint4.setText(hints[4]);
+							findViewById(R.id.ImageView05).setVisibility(View.VISIBLE);
+							break;
+							
+					}
+				}else{
+					switch(i){
+						case 0:
+							hint0.setText("");
+							findViewById(R.id.ImageView01).setVisibility(View.GONE);
+							break;
+						case 1:
+							hint1.setText("");
+							findViewById(R.id.ImageView02).setVisibility(View.GONE);
+							break;
+						case 2:
+							hint2.setText("");
+							findViewById(R.id.ImageView03).setVisibility(View.GONE);
+							break;
+						case 3:
+							hint3.setText("");
+							findViewById(R.id.ImageView04).setVisibility(View.GONE);
+							break;
+						case 4:
+							hint4.setText("");
+							findViewById(R.id.ImageView05).setVisibility(View.GONE);
+							break;
+					}
+				}
+			}
 		}
 		
 		
@@ -236,21 +268,6 @@ AdapterView.OnItemSelectedListener, ViewSwitcher.ViewFactory {
     	        locationListener);
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-
-
 	
 	public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
 		

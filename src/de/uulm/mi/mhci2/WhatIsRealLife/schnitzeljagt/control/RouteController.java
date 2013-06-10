@@ -3,6 +3,8 @@ package de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.control;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 import de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.resource.Location;
 import de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.resource.Route;
 
@@ -57,8 +59,24 @@ public class RouteController {
 	
 	public void createRoute(JSONObject json){
 		int nrOfLocs;
-<<<<<<< HEAD
-<<<<<<< HEAD
+
+		try {
+			nrOfLocs = json.getInt("totalLocs");
+			activeRoute = new Route(nrOfLocs);
+		
+			String routeName = json.getString("routeName");
+			String routeID = json.getString("routeID");
+			
+			activeRoute.setId(routeID);
+			activeRoute.setName(routeName);
+			
+			addLocation(json);
+			
+			Route.locCounter = 0;
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
 		
 		
 		try {
@@ -85,29 +103,7 @@ public class RouteController {
 				
 		}
 
-=======
-=======
->>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
-		try {
-			nrOfLocs = json.getInt("totalLocs");
-			activeRoute = new Route(nrOfLocs);
-		
-			String routeName = json.getString("routeName");
-			String routeID = json.getString("routeID");
-			
-			activeRoute.setId(routeID);
-			activeRoute.setName(routeName);
-			
-			addLocation(json);
-			
-			Route.locCounter = 0;
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-<<<<<<< HEAD
->>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
-=======
->>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
+
 	}
 	
 	public void addLocation(JSONObject json){
@@ -115,25 +111,20 @@ public class RouteController {
 			String routeID = json.getString("routeID");
 			int currentLoc = json.getInt("currentLoc");
 			
-<<<<<<< HEAD
-<<<<<<< HEAD
+
+			if(!activeRoute.getId().equals(routeID) ){
+				return;
+			}
+			
+		
+			
 			if(!activeRoute.getId().equals(routeID) ){
 				return;
 			}
 			
 			//|| Route.locCounter+1!=currentLoc
 			
-=======
-=======
->>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
-			if(!activeRoute.getId().equals(routeID) || Route.locCounter+1!=currentLoc){
-				return;
-			}
-			
-<<<<<<< HEAD
->>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
-=======
->>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
+
 			String hintName = json.getString("hintName");
 	
 							//abkürzung für: if "hint0" ==null {""} else { get("hint0")}
@@ -150,10 +141,14 @@ public class RouteController {
 			
 			String[] hints = {hint0,hint1,hint2,hint3,hint4};
 			
-<<<<<<< HEAD
-<<<<<<< HEAD
+
+			Location loc = new Location(latitude, longitude, hints, hintName, url);
 			
-			Location loc = null;		
+			activeRoute.addLocation(loc, currentLoc);
+			//Route.locCounter++;
+
+			
+			
 			
 			if(currentLoc >= Route.locCounter){
 				 loc = new Location(latitude, longitude, hints, hintName, url);
@@ -167,17 +162,7 @@ public class RouteController {
 			
 			
 			
-=======
-=======
->>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
-			Location loc = new Location(latitude, longitude, hints, hintName, url);
-			
-			activeRoute.addLocation(loc, currentLoc);
-			Route.locCounter++;
-<<<<<<< HEAD
->>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
-=======
->>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
+
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

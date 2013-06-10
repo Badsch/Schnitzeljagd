@@ -1,5 +1,7 @@
 package de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.resource;
 
+import android.util.Log;
+
 public class Route {
 	public static int locCounter = 0;
 	
@@ -23,7 +25,7 @@ public class Route {
 		return new Route(5);
 	}
 	
-	public Location getCurrendLocation(){
+	public Location getCurrendLocation(){		
 		return locations[locCounter];
 	}
 	
@@ -46,15 +48,16 @@ public class Route {
 	public void setId(String id) {
 		this.id = id;
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 	
 	public Location getLocation(int locCount){
 		return locations[locCount];
 	}
-=======
->>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
-=======
->>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
+
+	public int getLength() {
+		
+		return locations.length;
+	}
+
 
 }

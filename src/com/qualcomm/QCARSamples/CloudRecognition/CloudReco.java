@@ -1497,12 +1497,14 @@ public class CloudReco extends Activity
     private void updateProductView(BookOverlayView productView, Location book)
     {
     	//TODO : mach mich!
-        productView.setBookTitle(book.getTitle());
-        productView.setBookPrice("3f");
-        productView.setYourPrice("2f");
-        productView.setBookRatingCount("3");
-        productView.setRating("4");
-        //productView.setBookAuthor(book.getAuthor());
+        productView.setHintTitle(book.getTitle());
+        String[] hints = book.getHints();
+        
+        productView.setHint1(hints[0]);
+        productView.setHint2(hints[1]);
+        productView.setHint3(hints[2]);
+        productView.setHint4(hints[3]);
+        productView.setHint5(hints[4]);
         productView.setCoverViewFromBitmap(book.getThumb());
     }
 

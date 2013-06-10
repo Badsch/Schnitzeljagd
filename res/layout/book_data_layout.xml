@@ -42,7 +42,7 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/custom_view_title"
+                    android:id="@+id/hint_view_route"
                     android:layout_width="150dip"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
@@ -53,7 +53,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/custom_view_author"
+                    android:id="@+id/hint_view_title"
                     android:layout_width="150dip"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
@@ -61,55 +61,56 @@
                     android:singleLine="true"
                     android:textColor="@color/white"
                     android:textSize="@dimen/overlay_author" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
+            
+                <TextView
+                    android:id="@+id/custom_view_hint1"
+                    android:layout_width="150dip"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_gravity="left"
                     android:layout_marginTop="5dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal" >
-
-                    <RatingBar
-                        android:id="@+id/custom_view_rating"
-                        style="@style/starRatingBar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:numStars="5"
-                        android:rating="3" />
-
-                    <TextView
-                        android:id="@+id/custom_view_rating_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="3dp"
-                        android:singleLine="true"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/overlay_rating_text" />
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/overlay_author" />
+            
+                <TextView
+                    android:id="@+id/custom_view_hint2"
+                    android:layout_width="150dip"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp" >
-
-                    <TextView
-                        android:id="@+id/custom_view_price_old"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:singleLine="true"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/overlay_price_old" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:background="@drawable/custom_view_strikethrough"
-                        android:contentDescription="@string/content_description_strike" />
-                </RelativeLayout>
+                    android:layout_gravity="left"
+                    android:layout_marginTop="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/overlay_author" />
+            
+                <TextView
+                    android:id="@+id/custom_view_hint3"
+                    android:layout_width="150dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/overlay_author" />
+            
+                <TextView
+                    android:id="@+id/custom_view_hint4"
+                    android:layout_width="150dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/overlay_author" />
+            
+                <TextView
+                    android:id="@+id/custom_view_hint5"
+                    android:layout_width="150dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="5dp"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/overlay_author" />
             </LinearLayout>
         </LinearLayout>
 
@@ -130,38 +131,6 @@
         android:layout_height="wrap_content"
         android:layout_alignRight="@id/overlay_background"
         android:layout_below="@id/custom_view_information_container" >
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/content_description_background"
-            android:src="@drawable/badge_background" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical"
-            android:rotation="20" >
-
-            <TextView
-                android:id="@+id/badge_price_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/book_data_your_price"
-                android:textColor="@color/white"
-                android:textSize="@dimen/overlay_price_title"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/badge_price_value"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:textColor="@color/white"
-                android:textSize="@dimen/overlay_price_value"
-                android:textStyle="bold" />
-        </LinearLayout>
     </FrameLayout>
 
 </RelativeLayout>

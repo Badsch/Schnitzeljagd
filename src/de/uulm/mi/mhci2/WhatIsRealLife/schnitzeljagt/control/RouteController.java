@@ -57,6 +57,7 @@ public class RouteController {
 	
 	public void createRoute(JSONObject json){
 		int nrOfLocs;
+<<<<<<< HEAD
 		
 		
 		try {
@@ -83,6 +84,24 @@ public class RouteController {
 				
 		}
 
+=======
+		try {
+			nrOfLocs = json.getInt("totalLocs");
+			activeRoute = new Route(nrOfLocs);
+		
+			String routeName = json.getString("routeName");
+			String routeID = json.getString("routeID");
+			
+			activeRoute.setId(routeID);
+			activeRoute.setName(routeName);
+			
+			addLocation(json);
+			
+			Route.locCounter = 0;
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+>>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
 	}
 	
 	public void addLocation(JSONObject json){
@@ -90,12 +109,19 @@ public class RouteController {
 			String routeID = json.getString("routeID");
 			int currentLoc = json.getInt("currentLoc");
 			
+<<<<<<< HEAD
 			if(!activeRoute.getId().equals(routeID) ){
 				return;
 			}
 			
 			//|| Route.locCounter+1!=currentLoc
 			
+=======
+			if(!activeRoute.getId().equals(routeID) || Route.locCounter+1!=currentLoc){
+				return;
+			}
+			
+>>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
 			String hintName = json.getString("hintName");
 	
 							//abkürzung für: if "hint0" ==null {""} else { get("hint0")}
@@ -112,6 +138,7 @@ public class RouteController {
 			
 			String[] hints = {hint0,hint1,hint2,hint3,hint4};
 			
+<<<<<<< HEAD
 			
 			Location loc = null;		
 			
@@ -127,6 +154,12 @@ public class RouteController {
 			
 			
 			
+=======
+			Location loc = new Location(latitude, longitude, hints, hintName, url);
+			
+			activeRoute.addLocation(loc, currentLoc);
+			Route.locCounter++;
+>>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

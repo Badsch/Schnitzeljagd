@@ -1314,7 +1314,11 @@ public class CloudReco extends Activity
                 
                 
 
+<<<<<<< HEAD
                 if(jsonObject.getInt("route") == 1){
+=======
+                if(jsonObject.getBoolean("route")){
+>>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
                 	
 //                	Route route = new Route(Integer.parseInt(jsonObject.getString("totalLocs")));
 //                	routeController.setActiveRoute(route);               	
@@ -1324,9 +1328,12 @@ public class CloudReco extends Activity
                 	routeController.addLocation(jsonObject);
                 }
                 
+<<<<<<< HEAD
                 //mBookData = routeController.getActiveRoute().getCurrendLocation();
                 mBookData = routeController.getActiveRoute().getLocation(jsonObject.getInt("currentLoc"));
                 
+=======
+>>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
                 // Gets the thumb image
                 
                 String a = jsonObject.getString("imgURL");

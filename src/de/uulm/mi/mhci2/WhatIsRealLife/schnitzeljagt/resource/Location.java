@@ -5,12 +5,15 @@ import android.graphics.Bitmap;
 public class Location {
 	
 	//GPS Coords
-	private double latitude;
-	private double longitude;
+	private long latitude;
+	private long longitude;
 	private String[] hints;
 	private String title;
 	private String url;
+<<<<<<< HEAD
 	private Bitmap thumb;
+=======
+>>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
 	
 	public Location (long _lat, long _long, String[] _hints, String _title, String _url){
 		this.latitude = _lat;
@@ -24,7 +27,7 @@ public class Location {
 		return latitude;
 	}
 
-	public void setLatitude(double latitude) {
+	public void setLatitude(long latitude) {
 		this.latitude = latitude;
 	}
 
@@ -32,7 +35,7 @@ public class Location {
 		return longitude;
 	}
 
-	public void setLongitude(double longitude) {
+	public void setLongitude(long longitude) {
 		this.longitude = longitude;
 	}
 
@@ -59,6 +62,7 @@ public class Location {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+<<<<<<< HEAD
 	
     public Bitmap getThumb()
     {
@@ -70,4 +74,6 @@ public class Location {
     {
         this.thumb = thumb;
     }
+=======
+>>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
 }

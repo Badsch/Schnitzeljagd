@@ -15,13 +15,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
+<<<<<<< HEAD
 import android.widget.TextView;
+=======
+>>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
 
 public class RouteActivity extends Activity {
 		
 	private RouteController routeController;
+<<<<<<< HEAD
 	private Location activeLocation;	
 	
+=======
+	private Location activeLocation;
+	
+	
+	
+>>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
 	private android.location.Location currentLocation;
 	private android.location.Location targetLocation;
 	private float distance = 0;
@@ -63,10 +73,13 @@ public class RouteActivity extends Activity {
 	
 	private void setViewText(){
 		//TODO fill me biatch!!!!!!
+<<<<<<< HEAD
 		
 		locationTitle =(TextView)findViewById(R.id.LocationTitle); 
 		locationTitle.setText(activeLocation.getTitle());
 		
+=======
+>>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
 	}
 
 	@Override

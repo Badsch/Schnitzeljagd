@@ -11,7 +11,10 @@ public class Location {
 	private String title;
 	private String url;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	private Bitmap thumb;
+=======
+>>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
 =======
 >>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
 	
@@ -63,6 +66,7 @@ public class Location {
 		this.url = url;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
     public Bitmap getThumb()
     {
@@ -74,6 +78,8 @@ public class Location {
     {
         this.thumb = thumb;
     }
+=======
+>>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
 =======
 >>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
 }

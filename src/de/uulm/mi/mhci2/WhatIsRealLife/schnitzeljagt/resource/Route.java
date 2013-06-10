@@ -47,10 +47,13 @@ public class Route {
 		this.id = id;
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 	public Location getLocation(int locCount){
 		return locations[locCount];
 	}
+=======
+>>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
 =======
 >>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
 

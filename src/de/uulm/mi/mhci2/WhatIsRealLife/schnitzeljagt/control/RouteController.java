@@ -58,6 +58,7 @@ public class RouteController {
 	public void createRoute(JSONObject json){
 		int nrOfLocs;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		
 		
 		try {
@@ -85,6 +86,8 @@ public class RouteController {
 		}
 
 =======
+=======
+>>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
 		try {
 			nrOfLocs = json.getInt("totalLocs");
 			activeRoute = new Route(nrOfLocs);
@@ -101,6 +104,9 @@ public class RouteController {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+<<<<<<< HEAD
+>>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
+=======
 >>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
 	}
 	
@@ -110,6 +116,7 @@ public class RouteController {
 			int currentLoc = json.getInt("currentLoc");
 			
 <<<<<<< HEAD
+<<<<<<< HEAD
 			if(!activeRoute.getId().equals(routeID) ){
 				return;
 			}
@@ -117,10 +124,15 @@ public class RouteController {
 			//|| Route.locCounter+1!=currentLoc
 			
 =======
+=======
+>>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
 			if(!activeRoute.getId().equals(routeID) || Route.locCounter+1!=currentLoc){
 				return;
 			}
 			
+<<<<<<< HEAD
+>>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
+=======
 >>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
 			String hintName = json.getString("hintName");
 	
@@ -139,6 +151,7 @@ public class RouteController {
 			String[] hints = {hint0,hint1,hint2,hint3,hint4};
 			
 <<<<<<< HEAD
+<<<<<<< HEAD
 			
 			Location loc = null;		
 			
@@ -155,10 +168,15 @@ public class RouteController {
 			
 			
 =======
+=======
+>>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
 			Location loc = new Location(latitude, longitude, hints, hintName, url);
 			
 			activeRoute.addLocation(loc, currentLoc);
 			Route.locCounter++;
+<<<<<<< HEAD
+>>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
+=======
 >>>>>>> be16e16bc37c2adfd3339f67bd4242f67b2a8c81
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

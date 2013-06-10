@@ -134,8 +134,8 @@ public class RouteController {
 			String hint3 = json.getString("hint3")==null?"":json.getString("hint3");
 			String hint4 = json.getString("hint4")==null?"":json.getString("hint4");
 			
-			long latitude = json.getLong("latitude");
-			long longitude = json.getLong("longitude");
+			double latitude = json.getDouble("latitude");
+			double longitude = json.getDouble("longitude");
 			
 			String url = json.getString("imgURL");
 			

@@ -19,15 +19,19 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
+import java.math.RoundingMode;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.http.util.ByteArrayBuffer;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -1814,7 +1818,8 @@ public class CloudReco extends Activity
 		// Listener für GPS
     	final LocationListener locationListener = new android.location.LocationListener() {
     		    		
-    		public void onLocationChanged(android.location.Location l) {
+    		@SuppressLint("NewApi")
+			public void onLocationChanged(android.location.Location l) {
   	         
     			textDistance = (TextView) mUILayout.findViewById(R.id.textDistance);
     		//TextView tv = new TextView(gpstracker.this);
@@ -1827,7 +1832,11 @@ public class CloudReco extends Activity
     			//textDistance.setText(l.getLatitude() + " " + l.getLongitude());
   	         
     			distance = targetLocation.distanceTo(currentLocation);
-    			textDistance.setText(distance +" m");
+    			// abrunden
+    		    NumberFormat numberFormat = new DecimalFormat("0.00");
+    		    numberFormat.setRoundingMode(RoundingMode.DOWN);
+    			
+    			textDistance.setText(numberFormat.format(distance) +" m");
   	       
          
     		}

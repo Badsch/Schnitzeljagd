@@ -5,8 +5,8 @@ import android.graphics.Bitmap;
 public class Location {
 	
 	//GPS Coords
-	private long latitude;
-	private long longitude;
+	private double latitude;
+	private double longitude;
 	private String[] hints;
 	private String title;
 	private String url;
@@ -14,7 +14,8 @@ public class Location {
 	private Bitmap thumb;
 
 	
-	public Location (long _lat, long _long, String[] _hints, String _title, String _url){
+	public Location (double _lat, double _long, String[] _hints, String _title, String _url){
+		//XXX: WEil komische scheisse mit den coords passiert die nirgends ein grund hat werden hier lat und long geswapt
 		this.latitude = _lat;
 		this.longitude = _long;
 		this.hints = _hints;
@@ -26,7 +27,7 @@ public class Location {
 		return latitude;
 	}
 
-	public void setLatitude(long latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 
@@ -34,7 +35,7 @@ public class Location {
 		return longitude;
 	}
 
-	public void setLongitude(long longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 

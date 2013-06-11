@@ -59,5 +59,13 @@ public class Route {
 		return locations.length;
 	}
 
+	public boolean getIsWardSolved(int i) {
+		return isWardSolved[i];
+	}
+
+	public void setIsWardSolved(int i) {
+		this.isWardSolved[i] = true;
+	}
+
 
 }

@@ -1,6 +1,7 @@
 package de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.resource;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 public class Location {
 	
@@ -71,7 +72,8 @@ public class Location {
 
     public void setThumb(Bitmap thumb)
     {
-        this.thumb = thumb;
+        this.thumb = thumb;        
+        
     }
 
 }

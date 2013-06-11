@@ -61,11 +61,12 @@ public final class R {
         public static final int rating_bar_full=0x7f020012;
         public static final int rating_empty=0x7f020013;
         public static final int rating_full=0x7f020014;
-        public static final int splash_background_tile=0x7f020015;
-        public static final int strich=0x7f020016;
-        public static final int test=0x7f020017;
-        public static final int test2=0x7f020018;
-        public static final int tiled_background=0x7f020019;
+        public static final int search=0x7f020015;
+        public static final int splash_background_tile=0x7f020016;
+        public static final int strich=0x7f020017;
+        public static final int test=0x7f020018;
+        public static final int test2=0x7f020019;
+        public static final int tiled_background=0x7f02001a;
     }
     public static final class id {
         public static final int ImageView01=0x7f09000a;

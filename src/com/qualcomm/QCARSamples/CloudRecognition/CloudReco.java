@@ -623,7 +623,7 @@ public class CloudReco extends Activity
         
         routeController = RouteController.getRouteController();
         
-        if (routeController.getActiveRoute()!=null && routeController.getActiveRoute().getCurrendLocation() != null){
+        if (routeController.getActiveRoute()!=null && routeController.getCurrendLocation() != null){
         	initLocationManager();
         }
         
@@ -1336,7 +1336,7 @@ public class CloudReco extends Activity
               
                 
                 //mBookData = routeController.getActiveRoute().getCurrendLocation();
-                mBookData = routeController.getActiveRoute().getLocation(jsonObject.getInt("currentLoc"));
+                mBookData = routeController.getLocation(jsonObject.getInt("currentLoc"));
                 
 
                 Log.d("lalalalalalal", routeController.getActiveRoute().getLocation(0) + " " +jsonObject.getInt("currentLoc") );
@@ -1878,8 +1878,8 @@ public class CloudReco extends Activity
     	
     	Log.d("lalalalalalal", "fsdfasf ##################" );
     	
-    	double latitude = routeController.getActiveRoute().getCurrendLocation().getLatitude();
-    	double longitude = routeController.getActiveRoute().getCurrendLocation().getLongitude();
+    	double latitude = routeController.getCurrendLocation().getLatitude();
+    	double longitude = routeController.getCurrendLocation().getLongitude();
     	
     	Log.d("lalalalalalal", "+++++++++++++++++++++" );
     	

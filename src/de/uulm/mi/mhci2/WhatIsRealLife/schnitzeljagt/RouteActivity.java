@@ -1,12 +1,17 @@
 package de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +21,7 @@ import android.widget.Gallery;
 import android.widget.Gallery.LayoutParams;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
@@ -62,7 +68,7 @@ AdapterView.OnItemSelectedListener, ViewSwitcher.ViewFactory {
 		setContentView(R.layout.activity_route);
 		
 		routeController = RouteController.getRouteController();
-		activeLocation = routeController.getActiveRoute().getCurrendLocation();		
+		activeLocation = routeController.getCurrendLocation();		
 		
 		locationTitle =(TextView)findViewById(R.id.LocationTitle); 
 		routeTitle =(TextView)findViewById(R.id.routeTitle1); 
@@ -94,14 +100,14 @@ AdapterView.OnItemSelectedListener, ViewSwitcher.ViewFactory {
 	@Override
 	protected void onRestart() {
 		super.onRestart();
-		activeLocation = routeController.getActiveRoute().getCurrendLocation();
+		activeLocation = routeController.getCurrendLocation();
 		setViewText(activeLocation);
 	}
 	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		activeLocation = routeController.getActiveRoute().getCurrendLocation();
+		activeLocation = routeController.getCurrendLocation();
 		setViewText(activeLocation);
 	}
 	
@@ -119,6 +125,18 @@ AdapterView.OnItemSelectedListener, ViewSwitcher.ViewFactory {
 		if (location == null){
 			routeTitle.setText(route.getName());
 			locationTitle.setText("locked Postion");
+			
+			hint0.setText("");
+			findViewById(R.id.ImageView01).setVisibility(View.GONE);
+			hint1.setText("");
+			findViewById(R.id.ImageView02).setVisibility(View.GONE);
+			hint2.setText("");
+			findViewById(R.id.ImageView03).setVisibility(View.GONE);
+			hint3.setText("");
+			findViewById(R.id.ImageView04).setVisibility(View.GONE);
+			hint4.setText("");
+			findViewById(R.id.ImageView05).setVisibility(View.GONE);
+
 			
 		}else{
 			routeTitle.setText(route.getName());
@@ -272,7 +290,7 @@ AdapterView.OnItemSelectedListener, ViewSwitcher.ViewFactory {
 	public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
 		
 		
-		Location loc = routeController.getActiveRoute().getLocation(position);
+		Location loc = routeController.getLocation(position);
 		setViewText(loc);
 		//locationTitle.setText(String.valueOf(position));
         //mSwitcher.setImageResource(mImageIds[position]);
@@ -295,9 +313,9 @@ AdapterView.OnItemSelectedListener, ViewSwitcher.ViewFactory {
     public View makeView() {
         ImageView i = new ImageView(this);
         i.setBackgroundColor(0xFF000000);
-        //i.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        //i.setLayoutParams(new ImageSwitcher.LayoutParams(LayoutParams.MATCH_PARENT,
-        //        LayoutParams.MATCH_PARENT));
+        i.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        i.setLayoutParams(new ImageSwitcher.LayoutParams(LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT));
                
         
         return i;
@@ -322,7 +340,8 @@ AdapterView.OnItemSelectedListener, ViewSwitcher.ViewFactory {
             return position;
         }
  
-        public View getView(int position, View convertView, ViewGroup parent) {
+        @SuppressLint("NewApi")
+		public View getView(int position, View convertView, ViewGroup parent) {
             ImageView i = new ImageView(mContext);
  
             //i.setImageResource(mThumbIds[position]);
@@ -342,22 +361,41 @@ AdapterView.OnItemSelectedListener, ViewSwitcher.ViewFactory {
             }
            
             
-            if (routeController.getActiveRoute().getLocation(position) == null || routeController.getActiveRoute().getLocation(position).getThumb() == null){
+            if (routeController.getLocation(position) == null || routeController.getLocation(position).getThumb() == null){
             	
-            	i.setImageResource(R.drawable.locked);
+            	i.setImageResource(R.drawable.locked);                
             }
             else{
-            	 i.setImageBitmap(routeController.getActiveRoute().getLocation(position).getThumb());
+            	if(routeController.getActiveRoute().getIsWardSolved(position)){
+                	Bitmap b = routeController.getLocation(position).getThumb();
+
+                	i.setImageBitmap(Bitmap.createScaledBitmap(b, 243, 333, false));
+            	}else if(!routeController.getActiveRoute().getIsWardSolved(position)){
+            		i.setImageResource(R.drawable.search); 
+            	}else {
+            		i.setImageResource(R.drawable.locked); 
+            	}
+            		
+            	//routeController.getActiveRoute().getLocation(position).getThumb().getByteCount();
+            	//i.setImageResource(routeController.getActiveRoute().getLocation(position).getThumb().getByteCount()); 
+            	//i.setImageBitmap(routeController.getActiveRoute().getLocation(position).getThumb());
+            	
+            	//Drawable drawable =new BitmapDrawable(routeController.getActiveRoute().getLocation(position).getThumb());
+            	//drawable.setB
+            	//i.setImageDrawable(drawable);
+            	
+            	//i.setMinimumHeight(300);
+            	//i.setScaleType(ScaleType.FIT_CENTER);
             	
             }       
             
             
            
            
-            i.setAdjustViewBounds(true);
-            i.setLayoutParams(new Gallery.LayoutParams(
-                    LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-            i.setBackgroundResource(R.drawable.blueprint_vuforia);
+            //i.setAdjustViewBounds(true);
+            //i.setLayoutParams(new Gallery.LayoutParams(
+            //        LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+            //i.setBackgroundResource(R.drawable.blueprint_vuforia);
             return i;
         }
  

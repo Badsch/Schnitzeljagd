@@ -3,15 +3,22 @@ package de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.control;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R;
+import android.R.drawable;
+import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
+import de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.RouteActivity;
 import de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.resource.Location;
 import de.uulm.mi.mhci2.WhatIsRealLife.schnitzeljagt.resource.Route;
 
 public class RouteController {
 	private static RouteController instance;
 	private Route activeRoute;
-	
+	private boolean isEndLoc = false;
+	private Location endLoc;
 	
 	
 	public static RouteController generateRouteController(int nrOfRoutes){
@@ -29,24 +36,6 @@ public class RouteController {
 	private RouteController(){
 		//getDefaultRoute();
 
-	}
-	
-	@Deprecated
-	public void getDefaultRoute(){		
-		String[] hintsA = {"Am Wasser liegt ein See.",
-						   "Die Sonne scheint auch nachts.",
-						   "Nachts ists kälter als draußen.",
-						   "Gestern war auch schön."};
-		Location a = new Location(0, 0, hintsA, "Hinweis 1", "");
-		
-		String[] hintsB = {"Heute Trinken",
-						   "Morgen Sterben",
-						   "Wein her!"};
-		Location b = new Location(1, 1, hintsB, "Hinweis 2", "");
-		
-		activeRoute = new Route(2);
-		activeRoute.addLocation(a, 0);
-		activeRoute.addLocation(b, 1);
 	}
 
 	public Route getActiveRoute(){
@@ -116,15 +105,6 @@ public class RouteController {
 				return;
 			}
 			
-		
-			
-			if(!activeRoute.getId().equals(routeID) ){
-				return;
-			}
-			
-			//|| Route.locCounter+1!=currentLoc
-			
-
 			String hintName = json.getString("hintName");
 	
 							//abkürzung für: if "hint0" ==null {""} else { get("hint0")}
@@ -143,29 +123,48 @@ public class RouteController {
 			
 
 			Location loc = new Location(latitude, longitude, hints, hintName, url);
-			
-			activeRoute.addLocation(loc, currentLoc);
-			//Route.locCounter++;
 
-			
-			
+			if(currentLoc == json.getInt("totalLocs")){
+				//XXX: Endcase
+				activeRoute.setIsWardSolved(Route.locCounter);
+				endLoc = new Location(latitude, longitude, hints, hintName, url);
+				isEndLoc = true;
+				return;
+			}
 			
 			if(currentLoc >= Route.locCounter){
 				 loc = new Location(latitude, longitude, hints, hintName, url);
 				 activeRoute.addLocation(loc, currentLoc);
+				 if(currentLoc != 1){
+					 activeRoute.setIsWardSolved(Route.locCounter);					 
+				 }
 				 Route.locCounter++;
 			}
 			else {
 				loc = activeRoute.getLocation(currentLoc);
 			}
-			
-			
-			
-			
-
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public Location getLocation(int i){
+		return (!isEndLoc || i <activeRoute.getLength())?activeRoute.getLocation(i):(endLoc!=null?endLoc:null);
+	}
+	
+	public Location getCurrendLocation(){
+		return activeRoute.getCurrendLocation();
+	}
+	
+	public Bitmap getThumb(int i){
+		if(activeRoute.getIsWardSolved(i)){
+			return getLocation(i).getThumb();
+		}
+
+		//Bitmap bit = BitmapFactory.decodeFile("img/search.png");
+		return null;
+		
+		
 	}
 }
